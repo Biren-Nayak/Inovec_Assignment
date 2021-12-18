@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?textAppearanceBody1"
             android:textSize="50sp"
+            android:text="@{viewmodel.temperature }"
             android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

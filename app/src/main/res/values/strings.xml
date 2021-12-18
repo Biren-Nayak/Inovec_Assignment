@@ -2,5 +2,4 @@
     <string name="app_name">Inovec Assignment</string>
     <string name="theme">Theme</string>
     <string name="error_text">Error occurred!</string>
-    <string name="degree">°</string>
 </resources>

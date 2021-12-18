@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.inovecassignment.api.OpenWeatherAPIService
 import com.example.inovecassignment.constants.LoadingStates
 import com.example.inovecassignment.constants.WEEkDAYS_FORMAT
+import com.example.inovecassignment.constants.degree
 import com.example.inovecassignment.models.DayModel
 import com.example.inovecassignment.utils.currentDateTime
 import com.example.inovecassignment.utils.toString
@@ -24,10 +25,14 @@ class DaysViewModel : ViewModel() {
         get() = _list
 
 
-    private val _weatherMode= MutableLiveData<String>()
+    private val _weatherMode = MutableLiveData<String>()
     val weatherMode: LiveData<String>
         get() = _weatherMode
 
+
+    private val _temperature = MutableLiveData<String>()
+    val  temperature: LiveData<String>
+        get() = _temperature
 
     private lateinit var cityName: String
 
@@ -55,6 +60,7 @@ class DaysViewModel : ViewModel() {
         val weatherApiService = OpenWeatherAPIService.openWeatherAPI
         val daysList = weatherApiService.getCityWeather(cityName).list.toList()
         _weatherMode.value = daysList[0].weather[0].main
+        _temperature.value = (daysList[0].main.temp - 273.15).toInt().toString() + degree
         val tempList = mutableListOf<DayModel>()
         for (i in daysList.indices step updatesPerDay) {
             daysList[i].apply {

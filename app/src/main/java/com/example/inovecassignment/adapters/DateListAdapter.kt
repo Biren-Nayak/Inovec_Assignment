@@ -1,16 +1,11 @@
 package com.example.inovecassignment.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.inovecassignment.R
-import com.example.inovecassignment.databinding.CityItemBinding
 import com.example.inovecassignment.databinding.DateItemBinding
-import com.example.inovecassignment.models.CityItem
 import com.example.inovecassignment.models.DayModel
 
 class DateListAdapter: RecyclerView.Adapter<DateListAdapter.StateListViewHolder>() {
