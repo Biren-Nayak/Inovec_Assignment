@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inovecassignment.api.OpenWeatherAPIService
 import com.example.inovecassignment.constants.LoadingStates
-import com.example.inovecassignment.constants.WEEkDAYS_FORMAT
+import com.example.inovecassignment.constants.WEEKDAYS_FORMAT
 import com.example.inovecassignment.constants.degree
 import com.example.inovecassignment.models.DayModel
 import com.example.inovecassignment.utils.currentDateTime
@@ -15,7 +15,7 @@ import com.example.inovecassignment.utils.toString
 import kotlinx.coroutines.launch
 import java.util.*
 
-class DaysViewModel : ViewModel() {
+class DaysViewModel(city: String): ViewModel() {
     private val _loadingStates = MutableLiveData<LoadingStates>()
     val loadingStates: LiveData<LoadingStates>
         get() = _loadingStates
@@ -34,12 +34,11 @@ class DaysViewModel : ViewModel() {
     val  temperature: LiveData<String>
         get() = _temperature
 
-    private lateinit var cityName: String
+
+    private val cityName: String = city
 
 
-    fun getCityName(name: String = "Mumbai") {
-        cityName = name
-    }
+
 
     private fun getDetailedWeather() {
         viewModelScope.launch {
@@ -60,15 +59,16 @@ class DaysViewModel : ViewModel() {
         val weatherApiService = OpenWeatherAPIService.openWeatherAPI
         val daysList = weatherApiService.getCityWeather(cityName).list.toList()
         _weatherMode.value = daysList[0].weather[0].main
-        _temperature.value = (daysList[0].main.temp - 273.15).toInt().toString() + degree
+        _temperature.value = (daysList[0].main.temp - 273.15).toInt().toString() + degree + "C"
         val tempList = mutableListOf<DayModel>()
         for (i in daysList.indices step updatesPerDay) {
             daysList[i].apply {
                 tempList += DayModel(
                     i,
-                    Date(currentDateTime.time + millsPerDay*i/8).toString(WEEkDAYS_FORMAT),
+                    Date(currentDateTime.time + millsPerDay*i/8).toString(WEEKDAYS_FORMAT),
                     weather[0].description,
-                    (main.temp - 273.15).toInt().toString()
+                    (main.tempMin - 273.15).toInt().toString() + " - " +
+                              (main.tempMax - 273.15).toInt() + degree + "C"
                 )
             }
         }
@@ -77,7 +77,6 @@ class DaysViewModel : ViewModel() {
 
 
     init {
-        getCityName()
         getDetailedWeather()
     }
 }

@@ -49,7 +49,8 @@
             android:layout_margin="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/cloudy" />
+            tools:src="@drawable/cloudy"
+            app:tint="?colorOnSecondary" />
 
         <ProgressBar
             android:id="@+id/progress"

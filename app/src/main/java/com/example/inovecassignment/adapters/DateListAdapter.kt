@@ -50,6 +50,4 @@ class DateListAdapter: RecyclerView.Adapter<DateListAdapter.StateListViewHolder>
 
     override fun getItemCount(): Int = differ.currentList.size
 
-
-
 }

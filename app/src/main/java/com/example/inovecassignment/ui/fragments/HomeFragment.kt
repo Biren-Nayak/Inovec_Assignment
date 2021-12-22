@@ -26,10 +26,7 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-       /* requireActivity().onBackPressed() = {
 
-        }
-*/
         binding = FragmentHomeBinding.inflate(layoutInflater)
         homeViewModel = HomeViewModel()
         adapter = CityListAdapter()

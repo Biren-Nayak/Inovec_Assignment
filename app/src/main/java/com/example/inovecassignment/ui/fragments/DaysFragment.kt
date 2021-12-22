@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.inovecassignment.R
 import com.example.inovecassignment.adapters.DateListAdapter
-import com.example.inovecassignment.constants.LoadingStates
+import com.example.inovecassignment.constants.*
 import com.example.inovecassignment.databinding.FragmentDaysBinding
 import com.example.inovecassignment.viewmodel.DaysViewModel
 
@@ -25,8 +27,17 @@ class DaysFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDaysBinding.inflate(layoutInflater)
-        daysViewModel = DaysViewModel()
         adapter = DateListAdapter()
+
+        // For handling back press
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_daysFragment_to_homeFragment)
+            requireActivity().findViewById<TextView>(R.id.textView).text = getString(R.string.app_name)
+        }
+        val name = DaysFragmentArgs.fromBundle(requireArguments()).city
+        requireActivity().findViewById<TextView>(R.id.textView).text = name
+
+        daysViewModel = DaysViewModel(name)
 
         binding.apply {
             viewmodel = daysViewModel
@@ -36,10 +47,6 @@ class DaysFragment: Fragment() {
 
 
 
-        val name = DaysFragmentArgs.fromBundle(requireArguments()).city
-        daysViewModel.getCityName(name)
-        requireActivity().findViewById<TextView>(R.id.textView).text = name
-
         daysViewModel.list.observe(viewLifecycleOwner,{ result ->
             adapter.differ.submitList(result)
         })
@@ -47,8 +54,10 @@ class DaysFragment: Fragment() {
         daysViewModel.weatherMode.observe(viewLifecycleOwner, { state ->
             binding.image.setImageResource(
             when(state){
-                "Rainy" -> R.drawable.rainy
-                "Cloudy" -> R.drawable.cloudy
+                "Rain" -> R.drawable.rainy
+                "Clouds" -> R.drawable.cloudy
+                "Snow" -> R.drawable.snowy
+                "Extreme" -> R.drawable.stormy
                 else -> R.drawable.sunny
             })
         })

@@ -19,6 +19,9 @@
         <argument
             android:name="city"
             app:argType="string" />
+        <action
+            android:id="@+id/action_daysFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 </navigation>
