@@ -58,7 +58,8 @@ class DaysFragment: Fragment() {
                 "Clouds" -> R.drawable.cloudy
                 "Snow" -> R.drawable.snowy
                 "Extreme" -> R.drawable.stormy
-                else -> R.drawable.sunny
+                "Clear" -> R.drawable.sunny
+                else -> R.drawable.icon_sky
             })
         })
 
